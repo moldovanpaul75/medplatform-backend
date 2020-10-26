@@ -1,16 +1,21 @@
 package ro.tuc.ds2020.entities;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Table(name = "user_details")
 public class UserDetails implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -42,6 +47,26 @@ public class UserDetails implements Serializable {
     @JoinColumn(name = "user_authentication", referencedColumnName = "id")
     private UserAuthentication userAuthentication;
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "patient_caregiver",
+            joinColumns = @JoinColumn(name = "patient_id"),
+            inverseJoinColumns = @JoinColumn(name = "caregiver_id")
+    )
+    private UserDetails caregiver;
+
+    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
+    @Fetch(FetchMode.JOIN)
+    private List<UserDetails> patients;
+
+    @OneToMany(mappedBy = "patient", cascade =  CascadeType.ALL)
+    private List<MedicalRecord> medicalRecord;
+
+    @OneToMany(mappedBy = "doctor", cascade =  CascadeType.ALL)
+    private List<MedicationPlan> doctorMedicalPlans;
+
+    @OneToMany(mappedBy = "patient", cascade =  CascadeType.ALL)
+    private List<MedicationPlan> patientMedicalPlans;
 
     public UserDetails(){
     }
@@ -116,5 +141,45 @@ public class UserDetails implements Serializable {
 
     public void setUserAuthentication(UserAuthentication userAuthentication) {
         this.userAuthentication = userAuthentication;
+    }
+
+    public UserDetails getCaregiver() {
+        return caregiver;
+    }
+
+    public void setCaregiver(UserDetails caregiver) {
+        this.caregiver = caregiver;
+    }
+
+    public List<UserDetails> getPatients() {
+        return patients;
+    }
+
+    public void setPatients(List<UserDetails> patients) {
+        this.patients = patients;
+    }
+
+    public List<MedicalRecord> getMedicalRecord() {
+        return medicalRecord;
+    }
+
+    public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
+        this.medicalRecord = medicalRecord;
+    }
+
+    public List<MedicationPlan> getDoctorMedicalPlans() {
+        return doctorMedicalPlans;
+    }
+
+    public void setDoctorMedicalPlans(List<MedicationPlan> doctorMedicalPlans) {
+        this.doctorMedicalPlans = doctorMedicalPlans;
+    }
+
+    public List<MedicationPlan> getPatientMedicalPlans() {
+        return patientMedicalPlans;
+    }
+
+    public void setPatientMedicalPlans(List<MedicationPlan> patientMedicalPlans) {
+        this.patientMedicalPlans = patientMedicalPlans;
     }
 }

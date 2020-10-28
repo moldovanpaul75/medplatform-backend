@@ -1,24 +1,15 @@
 package ro.tuc.ds2020.entities;
 
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
-
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
+
 
 @Entity
 @Table(name = "address")
-public class Address implements Serializable {
+public class Address extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-binary")
-    private UUID id;
 
     @Column(name = "street", nullable = false)
     private String street;
@@ -43,14 +34,6 @@ public class Address implements Serializable {
         this.city = city;
         this.state = state;
         this.zipCode = zipCode;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getStreet(){
@@ -83,5 +66,13 @@ public class Address implements Serializable {
 
     public void setZipCode(String zipCode){
         this.zipCode = zipCode;
+    }
+
+    public UserDetails getUserDetails() {
+        return userDetails;
+    }
+
+    public void setUserDetails(UserDetails userDetails) {
+        this.userDetails = userDetails;
     }
 }

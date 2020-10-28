@@ -11,15 +11,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "side_effect")
-public class SideEffect implements Serializable {
+public class SideEffect extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-binary")
-    private UUID id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -36,14 +30,6 @@ public class SideEffect implements Serializable {
     public SideEffect(String name, String details) {
         this.name = name;
         this.details = details;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getName() {

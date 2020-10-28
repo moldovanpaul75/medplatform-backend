@@ -10,15 +10,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user_authentication")
-public class UserAuthentication implements Serializable {
+public class UserAuthentication extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-binary")
-    private UUID id;
 
     @Column(name = "username", nullable = false)
     private String username;
@@ -40,15 +34,6 @@ public class UserAuthentication implements Serializable {
         this.username = username;
         this.password = password;
         this.userRole = userRole;
-    }
-
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getUsername() {

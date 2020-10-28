@@ -13,15 +13,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "user_details")
-public class UserDetails implements Serializable {
+public class UserDetails extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-binary")
-    private UUID id;
 
     @Column(name = "first_name", nullable = false)
     private String firstName;
@@ -77,14 +71,6 @@ public class UserDetails implements Serializable {
         this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public String getFirstName() {

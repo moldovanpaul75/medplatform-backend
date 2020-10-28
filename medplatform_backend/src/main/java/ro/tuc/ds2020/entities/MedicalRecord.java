@@ -10,15 +10,9 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "medical_record")
-public class MedicalRecord implements Serializable {
+public class MedicalRecord extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "uuid-binary")
-    private UUID id;
 
     @Column(name = "release_date", nullable = false)
     @Temporal(TemporalType.DATE)
@@ -37,14 +31,6 @@ public class MedicalRecord implements Serializable {
     public MedicalRecord(Date date, String details) {
         this.releaseDate = date;
         this.details = details;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
     }
 
     public Date getReleaseDate() {

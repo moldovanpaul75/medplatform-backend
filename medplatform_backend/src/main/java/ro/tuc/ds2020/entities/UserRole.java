@@ -1,12 +1,11 @@
 package ro.tuc.ds2020.entities;
 
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.UUID;
+import java.util.List;
+
 
 @Entity
 @Table(name = "user_role")
@@ -17,8 +16,8 @@ public class UserRole extends BaseEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToOne(mappedBy = "userRole")
-    private UserAuthentication user;
+    @OneToMany(mappedBy = "userRole")
+    private List<UserAuthentication> users;
 
     public UserRole(){
     }

@@ -10,6 +10,7 @@ import java.util.UUID;
 
 @NoRepositoryBean
 public interface IService<T extends BaseDTO> {
+
     public abstract UUID save(T entity);
     public abstract Collection<T> findAll();
     public abstract Optional<T> findById(UUID id);
@@ -17,5 +18,5 @@ public interface IService<T extends BaseDTO> {
     public abstract void updateById(T dto, UUID id);
     public abstract void delete(T dto);
     public abstract void deleteById(UUID id);
-    public abstract void saveList(List<T> dtos);
+    public abstract void saveBulk(List<T> dtos);
 }

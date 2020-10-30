@@ -22,6 +22,13 @@ public class SideEffect extends BaseEntity implements Serializable {
     private String details;
 
     @ManyToMany(mappedBy = "sideEffectList", cascade = CascadeType.ALL)
+    /*
+        @JoinTable(
+            name = "medication_side_effects",
+            joinColumns = @JoinColumn(name = "side_effect_id"),
+            inverseJoinColumns = @JoinColumn(name = "medication_id")
+        )
+     */
     private List<Medication> medicationList;
 
     public SideEffect(){

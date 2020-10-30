@@ -1,15 +1,15 @@
 package ro.tuc.ds2020.controllers;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import ro.tuc.ds2020.dtos.BaseDTO;
 import ro.tuc.ds2020.services.IService;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
 
 public abstract class Controller<T extends BaseDTO> {
 
@@ -21,24 +21,34 @@ public abstract class Controller<T extends BaseDTO> {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    public List<T> list() {
-        return (List<T>) facade.findAll();
+    public ResponseEntity<List<T>> list() {
+        List<T> dtos = (List<T>) facade.findAll();
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
     }
-
-
+ 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public Optional<T> get(@PathVariable(value = "id") UUID id) {
-        return facade.findById(id);
+    public ResponseEntity<T> get(@PathVariable(value = "id") UUID id) {
+        Optional<T> dto = facade.findById(id);
+        return new ResponseEntity<>(dto.get(), HttpStatus.OK);
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public UUID create(@RequestBody T dto) {
-        return facade.save(dto);
+    public ResponseEntity<UUID> create(@RequestBody T dto) {
+        UUID id = facade.save(dto);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "bulk", method = RequestMethod.POST)
+    public ResponseEntity<List<T>> insertList(@RequestBody List<T> dtos){
+        facade.saveBulk(dtos);
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+
     @RequestMapping(method = RequestMethod.PUT)
-    public void update(@RequestBody T dto){
-        facade.update(dto);
+    public ResponseEntity<UUID> update(@RequestBody T dto){
+        UUID id = facade.update(dto);
+        return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)

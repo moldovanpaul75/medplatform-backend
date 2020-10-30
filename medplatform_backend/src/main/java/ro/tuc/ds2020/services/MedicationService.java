@@ -8,6 +8,7 @@ import ro.tuc.ds2020.repositories.MedicationRepository;
 
 @Component
 public class MedicationService extends Service<MedicationDTO, Medication> implements IMedicationService{
+
     protected MedicationService(MedicationRepository repository, IMapper<MedicationDTO, Medication> mapper) {
         super(repository, mapper);
     }

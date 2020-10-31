@@ -33,6 +33,9 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
     @Transactional(rollbackFor = Exception.class)
     public UUID save(DTO dto) {
         Entity entity = mapper.toEntity(dto);
+        if(dto.getId() == null){
+            entity.setId(UUID.randomUUID());
+        }
         repository.save(entity);
         LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.getId());
         return entity.getId();

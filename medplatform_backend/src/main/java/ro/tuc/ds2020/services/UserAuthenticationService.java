@@ -12,7 +12,6 @@ import ro.tuc.ds2020.entities.UserAuthentication;
 import ro.tuc.ds2020.repositories.UserAuthenticationRepository;
 
 
-
 @Component
 public class UserAuthenticationService extends Service<UserAuthenticationDTO, UserAuthentication> implements IUserAuthenticationService, UserDetailsService {
 
@@ -26,8 +25,10 @@ public class UserAuthenticationService extends Service<UserAuthenticationDTO, Us
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        LOGGER.debug("Authenticating user '{}'", username);
+        UserAuthentication user = ((UserAuthenticationRepository) repository).findByUsername(username)
+            .orElseThrow( () -> new UsernameNotFoundException("User Not Found with username: " + username));
 
-        return null;
+        LOGGER.debug("Authenticating user {}", username);
+        return mapper.toDTO(user);
     }
 }

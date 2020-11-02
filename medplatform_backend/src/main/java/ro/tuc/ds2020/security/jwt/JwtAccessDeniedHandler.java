@@ -11,13 +11,13 @@ import java.io.IOException;
 
 public class JwtAccessDeniedHandler implements AccessDeniedHandler {
 
-    private static final Logger logger = LoggerFactory.getLogger(JwtAccessDeniedHandler.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(JwtAccessDeniedHandler.class);
 
 
     //invoked when user tries to access a secured REST resource without the necessary authorization
     @Override
     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException {
-        logger.error("Unauthorized error: {}", e.getMessage());
+        LOGGER.error("Unauthorized error: {}", e.getMessage());
         response.sendError(HttpServletResponse.SC_FORBIDDEN, "Error: Unauthorized");
     }
 }

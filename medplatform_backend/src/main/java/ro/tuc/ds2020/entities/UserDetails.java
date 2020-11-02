@@ -23,9 +23,6 @@ public class UserDetails extends BaseEntity implements Serializable {
     @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Column(name = "email", nullable = false)
-    private String email;
-
     @Column(name = "date_of_birth", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date dateOfBirth;
@@ -65,10 +62,9 @@ public class UserDetails extends BaseEntity implements Serializable {
     public UserDetails(){
     }
 
-    public UserDetails(String firstName, String lastName, String email, Date dateOfBirth, String gender) {
+    public UserDetails(String firstName, String lastName, Date dateOfBirth, String gender) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
     }
@@ -87,14 +83,6 @@ public class UserDetails extends BaseEntity implements Serializable {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Date getDateOfBirth() {

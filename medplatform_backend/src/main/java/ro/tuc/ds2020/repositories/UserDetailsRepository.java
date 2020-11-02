@@ -8,5 +8,4 @@ import java.util.UUID;
 @Repository
 public interface UserDetailsRepository extends IBaseRepository<UserDetails, UUID>{
 
-    Boolean existsByEmail(String email);
 }

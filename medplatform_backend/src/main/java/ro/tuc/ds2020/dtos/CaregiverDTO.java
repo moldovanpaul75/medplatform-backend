@@ -9,7 +9,6 @@ public class CaregiverDTO extends BaseDTO {
 
     private String firstName;
     private String lastName;
-    private String email;
     private Date dateOfBirth;
     private String gender;
 
@@ -21,20 +20,18 @@ public class CaregiverDTO extends BaseDTO {
         super();
     }
 
-    public CaregiverDTO(UUID id, String firstName, String lastName, String email, Date dateOfBirth, String gender) {
+    public CaregiverDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
     }
 
-    public CaregiverDTO(UUID id, String firstName, String lastName, String email, Date dateOfBirth, String gender, AddressDTO address, UserAuthenticationDTO userAuthentication, List<PatientDTO> patients) {
+    public CaregiverDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender, AddressDTO address, UserAuthenticationDTO userAuthentication, List<PatientDTO> patients) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.address = address;
@@ -56,14 +53,6 @@ public class CaregiverDTO extends BaseDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Date getDateOfBirth() {

@@ -20,6 +20,9 @@ public class UserAuthentication extends BaseEntity implements Serializable {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "email", nullable = false)
+    private String email;
+
     @ManyToOne
     @JoinColumn(name = "role", referencedColumnName = "id", nullable = false)
     private UserRole userRole;
@@ -33,6 +36,7 @@ public class UserAuthentication extends BaseEntity implements Serializable {
     public UserAuthentication(String username, String password, String email, UserRole userRole) {
         this.username = username;
         this.password = password;
+        this.email = email;
         this.userRole = userRole;
     }
 
@@ -46,6 +50,14 @@ public class UserAuthentication extends BaseEntity implements Serializable {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {

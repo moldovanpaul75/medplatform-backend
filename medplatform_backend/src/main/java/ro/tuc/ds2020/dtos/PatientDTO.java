@@ -9,7 +9,6 @@ public class PatientDTO extends BaseDTO {
 
     private String firstName;
     private String lastName;
-    private String email;
     private Date dateOfBirth;
     private String gender;
 
@@ -22,11 +21,10 @@ public class PatientDTO extends BaseDTO {
     public PatientDTO() {
     }
 
-    public PatientDTO(UUID id, String firstName, String lastName, String email, Date dateOfBirth, String gender) {
+    public PatientDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
     }
@@ -35,7 +33,6 @@ public class PatientDTO extends BaseDTO {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.address = address;
@@ -59,14 +56,6 @@ public class PatientDTO extends BaseDTO {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
     }
 
     public Date getDateOfBirth() {

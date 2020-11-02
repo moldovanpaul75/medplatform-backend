@@ -54,7 +54,9 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
     @Transactional(readOnly = true)
     public Optional<DTO> findById(UUID id) {
         Optional<Entity> entity = repository.findById(id);
-
+        if(!entity.isPresent()){
+            LOGGER.error("{} could not find id {} in db", this.getClass().getSimpleName(), id);
+        }
         return entity.map(mapper::toDTO);
     }
 
@@ -102,7 +104,12 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
     @Transactional(rollbackFor = Exception.class)
     public void saveBulk(List<DTO> dtos) {
         List<Entity> entities = dtos.stream().map(mapper::toEntity).collect(Collectors.toList());
-        LOGGER.debug("Entities {} inserted into db", entities.get(0).getClass().getSimpleName());
+        entities.forEach(entity -> {
+            if(entity.getId() == null) entity.setId(UUID.randomUUID());
+        });
+        LOGGER.debug("{} entities inserted into db", entities.get(0).getClass().getSimpleName());
         repository.saveAll(entities);
+//        List<UUID> ids = entities.stream().map( entity -> {return entity.getId();}).collect(Collectors.toList());
+//        return ids;
     }
 }

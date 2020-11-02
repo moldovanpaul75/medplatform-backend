@@ -29,6 +29,9 @@ public abstract class Controller<T extends BaseDTO> {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<T> get(@PathVariable(value = "id") UUID id) {
         Optional<T> dto = facade.findById(id);
+        if(!dto.isPresent()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
         return new ResponseEntity<>(dto.get(), HttpStatus.OK);
     }
 

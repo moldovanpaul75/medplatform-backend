@@ -34,16 +34,16 @@ public class MedicationPlan extends BaseEntity implements Serializable {
     @Column(name = "evening", nullable = false)
     private boolean evening;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "patient", referencedColumnName = "id", nullable = false)
     private UserDetails patient;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "doctor", referencedColumnName = "id", nullable = false)
     private UserDetails doctor;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "medication", referencedColumnName = "id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "medication", referencedColumnName = "id")
     private Medication medication;
 
     public MedicationPlan(){

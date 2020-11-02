@@ -28,7 +28,7 @@ public class Medication extends BaseEntity implements Serializable {
     )
     private List<SideEffect> sideEffectList;
 
-    @OneToMany(mappedBy = "medication", cascade =  CascadeType.ALL)
+    @OneToMany(mappedBy = "medication")
     private List<MedicationPlan> medicationPlanList;
 
     public Medication(){

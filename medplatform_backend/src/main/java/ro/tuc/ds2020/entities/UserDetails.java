@@ -34,11 +34,11 @@ public class UserDetails extends BaseEntity implements Serializable {
     private String gender;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "address", referencedColumnName = "id")
+    @JoinColumn(name = "address", referencedColumnName = "id", nullable = false)
     private Address address;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_authentication", referencedColumnName = "id")
+    @JoinColumn(name = "user_authentication", referencedColumnName = "id", nullable = false)
     private UserAuthentication userAuthentication;
 
     @ManyToOne(cascade = CascadeType.ALL)

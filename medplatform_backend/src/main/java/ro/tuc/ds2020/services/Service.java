@@ -24,6 +24,7 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
     protected final IMapper<DTO, Entity> mapper;
 
 
+
     protected Service(IBaseRepository<Entity, UUID> repository, IMapper<DTO, Entity> mapper) {
         this.repository = repository;
         this.mapper = mapper;

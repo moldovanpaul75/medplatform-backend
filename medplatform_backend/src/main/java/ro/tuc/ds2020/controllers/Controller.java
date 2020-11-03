@@ -41,7 +41,7 @@ public abstract class Controller<T extends BaseDTO> {
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "bulk", method = RequestMethod.POST)
+    @RequestMapping(value = "/bulk", method = RequestMethod.POST)
     public ResponseEntity<List<T>> insertList(@RequestBody List<T> dtos){
         facade.saveBulk(dtos);
         return new ResponseEntity<>(dtos, HttpStatus.OK);

@@ -34,12 +34,9 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
     @Transactional(rollbackFor = Exception.class)
     public UUID save(DTO dto) {
         Entity entity = mapper.toEntity(dto);
-        if(dto.getId() == null){
-            entity.setId(UUID.randomUUID());
-        }
-        repository.save(entity);
+        Entity e = repository.save(entity);
         LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.getId());
-        return entity.getId();
+        return e.getId();
     }
 
     @Override
@@ -103,14 +100,13 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void saveBulk(List<DTO> dtos) {
+    public List<UUID> saveBulk(List<DTO> dtos) {
         List<Entity> entities = dtos.stream().map(mapper::toEntity).collect(Collectors.toList());
-        entities.forEach(entity -> {
-            if(entity.getId() == null) entity.setId(UUID.randomUUID());
-        });
+
+        List<Entity> listE = repository.saveAll(entities);
         LOGGER.debug("{} entities inserted into db", entities.get(0).getClass().getSimpleName());
-        repository.saveAll(entities);
-//        List<UUID> ids = entities.stream().map( entity -> {return entity.getId();}).collect(Collectors.toList());
-//        return ids;
+
+        List<UUID> ids = listE.stream().map( entity -> {return entity.getId();}).collect(Collectors.toList());
+        return ids;
     }
 }

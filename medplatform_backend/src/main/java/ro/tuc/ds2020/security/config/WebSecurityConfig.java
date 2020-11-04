@@ -6,22 +6,24 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.filter.CorsFilter;
 import ro.tuc.ds2020.security.jwt.JwtAccessDeniedHandler;
 import ro.tuc.ds2020.security.jwt.JwtAuthEntryPoint;
 import ro.tuc.ds2020.security.jwt.JwtFilter;
 import ro.tuc.ds2020.services.UserAuthenticationService;
 
+import javax.servlet.Filter;
+
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
         prePostEnabled = true
-    //, securedEnabled = true)
+     , securedEnabled = true
 )
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
@@ -34,11 +36,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private JwtAccessDeniedHandler accessDeniedHandler;
 
+    @Autowired
+    private CorsFilter corsFilter;
+
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         authenticationManagerBuilder.userDetailsService(userAuthenticationService).passwordEncoder(passwordEncoder());
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -56,21 +60,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return super.authenticationManagerBean();
     }
 
-
-
-    //config paths and requests that Spring Security will ignore
-    @Override
-    public void configure(WebSecurity web){
-        web.ignoring()
-                .antMatchers(
-                        "/",
-                        "/address"
-                );
-    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable() //disable cors and csrf
+        http
+                .csrf().disable() //disable csrf because our token is invulnerable
+
+                //add cors filter
+                .addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling()        //exception handlers
                 .authenticationEntryPoint(authEntryPoint)
@@ -80,12 +76,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-                .and()          //everyone can go to login
+                .and()
                 .authorizeRequests()
-                .antMatchers("/auth")
-                .permitAll()
-
-                .antMatchers("/user_role/**").hasAuthority("ROLE_doctor")
+                .antMatchers("/").permitAll()
+                .antMatchers("/auth").permitAll()
+                .antMatchers("/user_authentication").access("hasAuthority('ROLE_doctor')")
+                .antMatchers("/user_role").access("hasAuthority('ROLE_doctor')")
+                .antMatchers("/address").access("hasAuthority('ROLE_doctor') " +
+                                                                "or hasAuthority('ROLE_caregiver')")
+                .antMatchers("/**").denyAll()   //block all other requests
                 .anyRequest().authenticated()
         ;
 

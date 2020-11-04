@@ -18,5 +18,5 @@ public interface IService<T extends BaseDTO> {
     public abstract void updateById(T dto, UUID id);
     public abstract void delete(T dto);
     public abstract void deleteById(UUID id);
-    public abstract void saveBulk(List<T> dtos);
+    public abstract List<UUID> saveBulk(List<T> dtos);
 }

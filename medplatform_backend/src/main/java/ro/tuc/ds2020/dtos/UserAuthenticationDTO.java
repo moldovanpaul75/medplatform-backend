@@ -1,6 +1,7 @@
 package ro.tuc.ds2020.dtos;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -21,6 +22,7 @@ public class UserAuthenticationDTO extends BaseDTO implements UserDetails {
 
 
     public UserAuthenticationDTO(){
+        super();
     }
 
     public UserAuthenticationDTO(String username, String email, UserRoleDTO userRole) {
@@ -70,26 +72,31 @@ public class UserAuthenticationDTO extends BaseDTO implements UserDetails {
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isCredentialsNonExpired() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public boolean isEnabled() {
         return true;
     }
 
     @Override
+    @JsonIgnore
     public Collection<? extends GrantedAuthority> getAuthorities() {
         List<GrantedAuthority> authorities = new ArrayList<>();
         authorities.add(new SimpleGrantedAuthority(this.userRole.getName()));

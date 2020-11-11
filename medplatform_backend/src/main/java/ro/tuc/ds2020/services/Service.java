@@ -42,7 +42,7 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
     @Override
     @Transactional(readOnly = true)
     public List<DTO> findAll() {
-        LOGGER.debug("{} searched for values entities in table", this.getClass().getSimpleName());
+        LOGGER.debug("{} searched for entities in table", this.getClass().getSimpleName());
         return StreamSupport.stream(repository.findAll().spliterator(), false)
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());

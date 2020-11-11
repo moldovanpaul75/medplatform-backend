@@ -18,7 +18,6 @@ import ro.tuc.ds2020.security.jwt.JwtAuthEntryPoint;
 import ro.tuc.ds2020.security.jwt.JwtFilter;
 import ro.tuc.ds2020.services.UserAuthenticationService;
 
-import javax.servlet.Filter;
 
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(
@@ -79,12 +78,20 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-                .antMatchers("/auth").permitAll()
-                .antMatchers("/user_authentication").access("hasAuthority('ROLE_doctor')")
-                .antMatchers("/user_role").access("hasAuthority('ROLE_doctor')")
-                .antMatchers("/address").access("hasAuthority('ROLE_doctor') " +
-                                                                "or hasAuthority('ROLE_caregiver')")
-                .antMatchers("/**").denyAll()   //block all other requests
+//                .antMatchers("/auth").permitAll()
+//                .antMatchers("/user_authentication").access("hasAuthority('ROLE_doctor')")
+//                .antMatchers("/user_role").access("hasAuthority('ROLE_doctor')")
+//
+//                .antMatchers("/address").access("hasAuthority('ROLE_doctor') " +
+//                                                                "or hasAuthority('ROLE_caregiver')" +
+//                                                                "or hasAuthority('ROLE_patient')")
+//
+//                .antMatchers("/doctor").access("hasAuthority('ROLE_doctor')")
+//                .antMatchers("/patient").access("hasAuthority('ROLE_patient')")
+//                .antMatchers("/caregiver").access("hasAuthority('ROLE_caregiver')")
+//
+//                .antMatchers("/**").denyAll()   //block all other requests
+                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
         ;
 

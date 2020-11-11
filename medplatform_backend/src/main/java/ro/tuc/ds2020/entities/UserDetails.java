@@ -1,11 +1,11 @@
 package ro.tuc.ds2020.entities;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -30,13 +30,23 @@ public class UserDetails extends BaseEntity implements Serializable {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "address", referencedColumnName = "id", nullable = false)
     private Address address;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "user_authentication", referencedColumnName = "id", nullable = false)
     private UserAuthentication userAuthentication;
+
+
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    private List<MedicalRecord> medicalRecord;
+
+    @OneToMany(mappedBy = "doctor")
+    private List<MedicationPlan> doctorMedicalPlans;
+
+    @OneToMany(mappedBy = "patient")
+    private List<MedicationPlan> patientMedicalPlans;
 
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinTable(
@@ -46,18 +56,9 @@ public class UserDetails extends BaseEntity implements Serializable {
     )
     private UserDetails caregiver;
 
-    @OneToMany(mappedBy = "caregiver", cascade = CascadeType.ALL)
-    @Fetch(FetchMode.JOIN)
+    @OneToMany(mappedBy = "caregiver")
     private List<UserDetails> patients;
 
-    @OneToMany(mappedBy = "patient", cascade =  CascadeType.ALL)
-    private List<MedicalRecord> medicalRecord;
-
-    @OneToMany(mappedBy = "doctor", cascade =  CascadeType.ALL)
-    private List<MedicationPlan> doctorMedicalPlans;
-
-    @OneToMany(mappedBy = "patient", cascade =  CascadeType.ALL)
-    private List<MedicationPlan> patientMedicalPlans;
 
     public UserDetails(){
     }
@@ -67,6 +68,37 @@ public class UserDetails extends BaseEntity implements Serializable {
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
+    }
+
+    public UserDetails(String firstName, String lastName, Date dateOfBirth, String gender, Address address, UserAuthentication userAuthentication) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.userAuthentication = userAuthentication;
+    }
+
+    public UserDetails(String firstName, String lastName, Date dateOfBirth, String gender, Address address, UserAuthentication userAuthentication, UserDetails caregiver, List<MedicalRecord> medicalRecord, List<MedicationPlan> doctorMedicalPlans) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.userAuthentication = userAuthentication;
+        this.caregiver = caregiver;
+        this.medicalRecord = medicalRecord;
+        this.doctorMedicalPlans = doctorMedicalPlans;
+    }
+
+    public UserDetails(String firstName, String lastName, Date dateOfBirth, String gender, Address address, UserAuthentication userAuthentication, List<UserDetails> patients) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+        this.address = address;
+        this.userAuthentication = userAuthentication;
+        this.patients = patients;
     }
 
     public String getFirstName() {
@@ -133,14 +165,6 @@ public class UserDetails extends BaseEntity implements Serializable {
         this.patients = patients;
     }
 
-    public List<MedicalRecord> getMedicalRecord() {
-        return medicalRecord;
-    }
-
-    public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
-        this.medicalRecord = medicalRecord;
-    }
-
     public List<MedicationPlan> getDoctorMedicalPlans() {
         return doctorMedicalPlans;
     }
@@ -155,5 +179,13 @@ public class UserDetails extends BaseEntity implements Serializable {
 
     public void setPatientMedicalPlans(List<MedicationPlan> patientMedicalPlans) {
         this.patientMedicalPlans = patientMedicalPlans;
+    }
+
+    public List<MedicalRecord> getMedicalRecord() {
+        return medicalRecord;
+    }
+
+    public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
+        this.medicalRecord = medicalRecord;
     }
 }

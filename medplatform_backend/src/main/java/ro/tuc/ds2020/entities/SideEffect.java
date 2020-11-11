@@ -2,6 +2,8 @@ package ro.tuc.ds2020.entities;
 
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -21,14 +23,12 @@ public class SideEffect extends BaseEntity implements Serializable {
     @Column(name = "details", nullable = false)
     private String details;
 
-    @ManyToMany(mappedBy = "sideEffectList")
-    /*
-        @JoinTable(
+    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @JoinTable(
             name = "medication_side_effects",
             joinColumns = @JoinColumn(name = "side_effect_id"),
             inverseJoinColumns = @JoinColumn(name = "medication_id")
-        )
-     */
+    )
     private List<Medication> medicationList;
 
     public SideEffect(){

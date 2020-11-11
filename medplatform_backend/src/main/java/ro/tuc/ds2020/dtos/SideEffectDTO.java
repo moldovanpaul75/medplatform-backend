@@ -5,10 +5,13 @@ import java.util.UUID;
 
 public class SideEffectDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private String details;
 
     public SideEffectDTO(){
+        super();
     }
 
     public SideEffectDTO(UUID id, String name, String details) {

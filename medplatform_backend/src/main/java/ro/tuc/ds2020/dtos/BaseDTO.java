@@ -4,6 +4,9 @@ import java.util.UUID;
 
 public abstract class BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
+
     private UUID id;
 
     public BaseDTO() {

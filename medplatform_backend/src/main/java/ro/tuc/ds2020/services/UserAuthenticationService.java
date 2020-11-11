@@ -14,7 +14,9 @@ import ro.tuc.ds2020.dtos.builders.IMapper;
 import ro.tuc.ds2020.entities.UserAuthentication;
 import ro.tuc.ds2020.repositories.UserAuthenticationRepository;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 
 @Component
@@ -51,4 +53,7 @@ public class UserAuthenticationService extends Service<UserAuthenticationDTO, Us
         LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.getId());
         return e.getId();
     }
+
+
+
 }

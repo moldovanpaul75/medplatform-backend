@@ -9,7 +9,7 @@ public class MedicalRecordDTO extends BaseDTO {
     private Date releaseDate;
     private String details;
 
-    private PatientDTO patient;
+    //private PatientDTO patient;
 
     public MedicalRecordDTO() {
         super();
@@ -21,12 +21,12 @@ public class MedicalRecordDTO extends BaseDTO {
         this.details = details;
     }
 
-    public MedicalRecordDTO(UUID id, Date releaseDate, String details, PatientDTO patient) {
-        super(id);
-        this.releaseDate = releaseDate;
-        this.details = details;
-        this.patient = patient;
-    }
+//    public MedicalRecordDTO(UUID id, Date releaseDate, String details, PatientDTO patient) {
+//        super(id);
+//        this.releaseDate = releaseDate;
+//        this.details = details;
+//        this.patient = patient;
+//    }
 
     public Date getReleaseDate() {
         return releaseDate;
@@ -44,11 +44,11 @@ public class MedicalRecordDTO extends BaseDTO {
         this.details = details;
     }
 
-    public PatientDTO getPatient() {
-        return patient;
-    }
-
-    public void setPatient(PatientDTO patient) {
-        this.patient = patient;
-    }
+//    public PatientDTO getPatient() {
+//        return patient;
+//    }
+//
+//    public void setPatient(PatientDTO patient) {
+//        this.patient = patient;
+//    }
 }

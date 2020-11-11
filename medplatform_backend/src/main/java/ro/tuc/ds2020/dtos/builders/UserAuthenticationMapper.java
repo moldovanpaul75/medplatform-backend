@@ -11,6 +11,11 @@ public class UserAuthenticationMapper implements IOrikaMapper{
     public void addMapping(MapperFactory mapperFactory) {
         mapperFactory.classMap(UserAuthentication.class, UserAuthenticationDTO.class)
                 .byDefault()
+                .exclude("enabled")
+                .exclude("authorities")
+                .exclude("accountNonLocked")
+                .exclude("accountNonExpired")
+                .exclude("credentialsNonExpired")
                 .register();
     }
 }

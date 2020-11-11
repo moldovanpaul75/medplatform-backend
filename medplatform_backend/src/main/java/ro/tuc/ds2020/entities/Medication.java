@@ -1,12 +1,9 @@
 package ro.tuc.ds2020.entities;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.UUID;
 
 @Entity
 @Table(name = "medication")
@@ -20,7 +17,7 @@ public class Medication extends BaseEntity implements Serializable {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.REFRESH})
     @JoinTable(
             name = "medication_side_effects",
             joinColumns = @JoinColumn(name = "medication_id"),

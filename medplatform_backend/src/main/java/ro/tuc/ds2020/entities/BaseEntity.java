@@ -12,6 +12,7 @@ import java.util.UUID;
 @MappedSuperclass
 public abstract class BaseEntity {
 
+
     @Id
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")

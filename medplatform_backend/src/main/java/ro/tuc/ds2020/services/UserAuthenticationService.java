@@ -54,6 +54,32 @@ public class UserAuthenticationService extends Service<UserAuthenticationDTO, Us
         return e.getId();
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UUID update(UserAuthenticationDTO dto) {
+        UserAuthentication entity = mapper.toEntity(dto);
+        entity.setPassword(encoder.encode(dto.getPassword()));
+        repository.save(entity);
+        LOGGER.debug("{} updated id {} in db", this.getClass().getSimpleName(), entity.getId());
+        return entity.getId();
+    }
 
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public List<UUID> saveBulk(List<UserAuthenticationDTO> dtos) {
+        List<UserAuthentication> entities = dtos.stream().map(mapper::toEntity).collect(Collectors.toList());
+        entities.stream().forEach(user -> {
+            String password = user.getPassword();
+            user.setPassword(encoder.encode(password));
+        });
+
+
+        List<UserAuthentication> listE = repository.saveAll(entities);
+        LOGGER.debug("{} entities inserted into db", entities.get(0).getClass().getSimpleName());
+
+        List<UUID> ids = listE.stream().map( entity -> entity.getId()).collect(Collectors.toList());
+        return ids;
+    }
 
 }

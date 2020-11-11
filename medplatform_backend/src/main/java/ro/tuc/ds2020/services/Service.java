@@ -106,7 +106,7 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
         List<Entity> listE = repository.saveAll(entities);
         LOGGER.debug("{} entities inserted into db", entities.get(0).getClass().getSimpleName());
 
-        List<UUID> ids = listE.stream().map( entity -> {return entity.getId();}).collect(Collectors.toList());
+        List<UUID> ids = listE.stream().map( entity -> entity.getId()).collect(Collectors.toList());
         return ids;
     }
 }

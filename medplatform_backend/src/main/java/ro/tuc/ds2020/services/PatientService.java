@@ -33,8 +33,17 @@ public class PatientService extends Service<PatientDTO, UserDetails> implements 
     @Override
     @Transactional(readOnly = true)
     public Optional<PatientDTO> findById(UUID id) {
-        LOGGER.debug("{} searched for id: {} in table", this.getClass().getSimpleName(), id);
         Optional<UserDetails> entity = repository.findById(id);
+        if(!entity.isPresent()){
+            LOGGER.error("{} could not find id {} in db", this.getClass().getSimpleName(), id);
+        }
+        return entity.map(mapper::toDTO);
+    }
+
+
+    @Transactional(readOnly = true)
+    public Optional<PatientDTO> findUserByAuthId(UUID id) {
+        Optional<UserDetails> entity = ((UserDetailsRepository)repository).findProfileByAuthId(id);
         if(!entity.isPresent()){
             LOGGER.error("{} could not find id {} in db", this.getClass().getSimpleName(), id);
         }

@@ -30,12 +30,12 @@ public class UserDetails extends BaseEntity implements Serializable {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @OneToOne
-    @JoinColumn(name = "address", referencedColumnName = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address", referencedColumnName = "id")
     private Address address;
 
-    @OneToOne
-    @JoinColumn(name = "user_authentication", referencedColumnName = "id", nullable = false)
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_authentication", referencedColumnName = "id")
     private UserAuthentication userAuthentication;
 
 
@@ -48,7 +48,7 @@ public class UserDetails extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "patient")
     private List<MedicationPlan> patientMedicalPlans;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "patient_caregiver",
             joinColumns = @JoinColumn(name = "patient_id"),

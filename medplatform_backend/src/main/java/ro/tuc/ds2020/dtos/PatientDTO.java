@@ -14,8 +14,8 @@ public class PatientDTO extends BaseDTO {
 
     private AddressDTO address;
     private UserAuthenticationDTO userAuthentication;
-    private CaregiverDTO caregiver;
-    private List<MedicationPlanDTO> patientMedicalPlans;
+    //private CaregiverDTO caregiver;
+    //private List<MedicationPlanDTO> patientMedicalPlans;
     private List<MedicalRecordDTO> medicalRecord;
 
     public PatientDTO() {
@@ -30,7 +30,7 @@ public class PatientDTO extends BaseDTO {
         this.gender = gender;
     }
 
-    public PatientDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender, AddressDTO address, UserAuthenticationDTO userAuthentication, CaregiverDTO caregiver, List<MedicationPlanDTO> patientMedicalPlans, List<MedicalRecordDTO> medicalRecord) {
+    public PatientDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender, AddressDTO address, UserAuthenticationDTO userAuthentication, List<MedicalRecordDTO> medicalRecord) {
         super(id);
         this.firstName = firstName;
         this.lastName = lastName;
@@ -38,8 +38,6 @@ public class PatientDTO extends BaseDTO {
         this.gender = gender;
         this.address = address;
         this.userAuthentication = userAuthentication;
-        this.caregiver = caregiver;
-        this.patientMedicalPlans = patientMedicalPlans;
         this.medicalRecord = medicalRecord;
     }
 
@@ -91,13 +89,13 @@ public class PatientDTO extends BaseDTO {
         this.userAuthentication = userAuthentication;
     }
 
-    public CaregiverDTO getCaregiver() {
-        return caregiver;
-    }
-
-    public void setCaregiver(CaregiverDTO caregiver) {
-        this.caregiver = caregiver;
-    }
+//    public CaregiverDTO getCaregiver() {
+//        return caregiver;
+//    }
+//
+//    public void setCaregiver(CaregiverDTO caregiver) {
+//        this.caregiver = caregiver;
+//    }
 
     public List<MedicalRecordDTO> getMedicalRecord() {
         return medicalRecord;
@@ -107,11 +105,11 @@ public class PatientDTO extends BaseDTO {
         this.medicalRecord = medicalRecord;
     }
 
-    public List<MedicationPlanDTO> getPatientMedicalPlans() {
-        return patientMedicalPlans;
-    }
-
-    public void setPatientMedicalPlans(List<MedicationPlanDTO> patientMedicalPlans) {
-        this.patientMedicalPlans = patientMedicalPlans;
-    }
+//    public List<MedicationPlanDTO> getPatientMedicalPlans() {
+//        return patientMedicalPlans;
+//    }
+//
+//    public void setPatientMedicalPlans(List<MedicationPlanDTO> patientMedicalPlans) {
+//        this.patientMedicalPlans = patientMedicalPlans;
+//    }
 }

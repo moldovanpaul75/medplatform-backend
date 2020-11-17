@@ -5,13 +5,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ro.tuc.ds2020.dtos.UserAuthenticationDTO;
 import ro.tuc.ds2020.services.IService;
+import ro.tuc.ds2020.services.UserAuthenticationService;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @RestController
@@ -30,5 +29,4 @@ public class UserAuthenticationController extends Controller<UserAuthenticationD
         UUID id = facade.save(dto);
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
-
 }

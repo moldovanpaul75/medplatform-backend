@@ -34,11 +34,11 @@ public class MedicationPlan extends BaseEntity implements Serializable {
     @Column(name = "evening", nullable = false)
     private boolean evening;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "patient", referencedColumnName = "id", nullable = false)
     private UserDetails patient;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "doctor", referencedColumnName = "id", nullable = false)
     private UserDetails doctor;
 

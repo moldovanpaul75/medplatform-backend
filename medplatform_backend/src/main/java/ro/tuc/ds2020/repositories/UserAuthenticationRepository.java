@@ -12,4 +12,5 @@ public interface UserAuthenticationRepository extends IBaseRepository<UserAuthen
     Optional<UserAuthentication> findByUsername(String username);
     Boolean existsByUsername(String username);
     Boolean existsByEmail(String email);
+
 }

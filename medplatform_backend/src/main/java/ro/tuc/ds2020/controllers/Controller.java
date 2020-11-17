@@ -54,20 +54,26 @@ public abstract class Controller<T extends BaseDTO> {
         return new ResponseEntity<>(id, HttpStatus.CREATED);
     }
 
+
+
     @RequestMapping(value = "{id}", method = RequestMethod.PUT)
     public void updateById(@PathVariable("id") UUID id, @RequestBody T dto){
         facade.updateById(dto, id);
     }
 
+
+
     @RequestMapping(method = RequestMethod.DELETE)
-    public void delete(@RequestBody T dto){
+    public ResponseEntity<?> delete(@RequestBody T dto){
         facade.delete(dto);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public void deleteById(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<?> deleteById(@PathVariable(value = "id") UUID id){
         facade.deleteById(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }

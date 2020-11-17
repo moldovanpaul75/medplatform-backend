@@ -48,4 +48,13 @@ public class CaregiverService extends Service<CaregiverDTO, UserDetails> impleme
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    public Optional<CaregiverDTO> findUserByAuthId(UUID id) {
+        Optional<UserDetails> entity = ((UserDetailsRepository)repository).findProfileByAuthId(id);
+        if(!entity.isPresent()){
+            LOGGER.error("{} could not find id {} in db", this.getClass().getSimpleName(), id);
+        }
+        return entity.map(mapper::toDTO);
+    }
 }

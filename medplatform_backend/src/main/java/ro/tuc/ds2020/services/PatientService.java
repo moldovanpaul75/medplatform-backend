@@ -3,6 +3,7 @@ package ro.tuc.ds2020.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ro.tuc.ds2020.dtos.PatientDTO;
@@ -23,12 +24,24 @@ public class PatientService extends Service<PatientDTO, UserDetails> implements 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IPatientService.class);
 
+    @Autowired
+    private PasswordEncoder encoder;
 
     @Autowired
     protected PatientService(UserDetailsRepository repository, IMapper<PatientDTO, UserDetails> mapper) {
         super(repository, mapper);
     }
 
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UUID save(PatientDTO dto) {
+        UserDetails entity = mapper.toEntity(dto);
+        entity.getUserAuthentication().setPassword(encoder.encode(dto.getUserAuthentication().getPassword()));
+        UserDetails e = repository.save(entity);
+        LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.getId());
+        return e.getId();
+    }
 
     @Override
     @Transactional(readOnly = true)

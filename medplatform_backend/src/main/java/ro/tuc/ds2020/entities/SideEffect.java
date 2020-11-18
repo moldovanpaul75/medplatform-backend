@@ -23,7 +23,7 @@ public class SideEffect extends BaseEntity implements Serializable {
     @Column(name = "details", nullable = false)
     private String details;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
             name = "medication_side_effects",
             joinColumns = @JoinColumn(name = "side_effect_id"),

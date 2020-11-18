@@ -25,7 +25,7 @@ public class UserAuthenticationService extends Service<UserAuthenticationDTO, Us
     private static final Logger LOGGER = LoggerFactory.getLogger(IUserAuthenticationService.class);
 
     @Autowired
-    PasswordEncoder encoder;
+    private PasswordEncoder encoder;
 
     protected UserAuthenticationService(UserAuthenticationRepository repository, IMapper<UserAuthenticationDTO, UserAuthentication> mapper) {
         super(repository, mapper);

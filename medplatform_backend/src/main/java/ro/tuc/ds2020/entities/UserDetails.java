@@ -30,16 +30,16 @@ public class UserDetails extends BaseEntity implements Serializable {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "address", referencedColumnName = "id")
     private Address address;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_authentication", referencedColumnName = "id")
     private UserAuthentication userAuthentication;
 
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<MedicalRecord> medicalRecord;
 
     @OneToMany(mappedBy = "doctor")
@@ -48,15 +48,20 @@ public class UserDetails extends BaseEntity implements Serializable {
     @OneToMany(mappedBy = "patient")
     private List<MedicationPlan> patientMedicalPlans;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(cascade = {CascadeType.REFRESH})
     @JoinTable(
             name = "patient_caregiver",
             joinColumns = @JoinColumn(name = "patient_id"),
             inverseJoinColumns = @JoinColumn(name = "caregiver_id")
     )
-    private UserDetails caregiver;
+    private List<UserDetails> caregivers;
 
-    @OneToMany(mappedBy = "caregiver")
+    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @JoinTable(
+                name = "patient_caregiver",
+                joinColumns = @JoinColumn(name = "caregiver_id"),
+                inverseJoinColumns = @JoinColumn(name = "patient_id")
+    )
     private List<UserDetails> patients;
 
 
@@ -79,14 +84,14 @@ public class UserDetails extends BaseEntity implements Serializable {
         this.userAuthentication = userAuthentication;
     }
 
-    public UserDetails(String firstName, String lastName, Date dateOfBirth, String gender, Address address, UserAuthentication userAuthentication, UserDetails caregiver, List<MedicalRecord> medicalRecord, List<MedicationPlan> doctorMedicalPlans) {
+    public UserDetails(String firstName, String lastName, Date dateOfBirth, String gender, Address address, UserAuthentication userAuthentication, List<UserDetails> caregivers, List<MedicalRecord> medicalRecord, List<MedicationPlan> doctorMedicalPlans) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
         this.address = address;
         this.userAuthentication = userAuthentication;
-        this.caregiver = caregiver;
+        this.caregivers = caregivers;
         this.medicalRecord = medicalRecord;
         this.doctorMedicalPlans = doctorMedicalPlans;
     }
@@ -149,12 +154,12 @@ public class UserDetails extends BaseEntity implements Serializable {
         this.userAuthentication = userAuthentication;
     }
 
-    public UserDetails getCaregiver() {
-        return caregiver;
+    public List<UserDetails> getCaregivers() {
+        return caregivers;
     }
 
-    public void setCaregiver(UserDetails caregiver) {
-        this.caregiver = caregiver;
+    public void setCaregivers(List<UserDetails> caregivers) {
+        this.caregivers = caregivers;
     }
 
     public List<UserDetails> getPatients() {

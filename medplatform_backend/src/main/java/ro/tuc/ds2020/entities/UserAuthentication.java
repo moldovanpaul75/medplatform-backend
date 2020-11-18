@@ -27,7 +27,7 @@ public class UserAuthentication extends BaseEntity implements Serializable {
     @JoinColumn(name = "role", referencedColumnName = "id", nullable = false)
     private UserRole userRole;
 
-    @OneToOne(mappedBy = "userAuthentication")
+    @OneToOne(mappedBy = "userAuthentication", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     private UserDetails userDetails;
 
     public UserAuthentication(){

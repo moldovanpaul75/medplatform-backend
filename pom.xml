@@ -7,7 +7,7 @@
     <groupId>ro.tuc</groupId>
     <artifactId>ds-2020</artifactId>
     <version>1.0</version>
-    <name>ds-2020</name>
+    <name>ds-2020-med-platform</name>
     <description>Online Medication Platform</description>
     <packaging>jar</packaging>
 
@@ -24,6 +24,30 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>ma.glasnost.orika</groupId>
+            <artifactId>orika-core</artifactId>
+            <version>1.5.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.jsonwebtoken</groupId>
+            <artifactId>jjwt</artifactId>
+            <version>0.9.1</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
@@ -195,3 +219,4 @@
     </reporting>
 
 </project>
+

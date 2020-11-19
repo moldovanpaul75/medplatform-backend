@@ -7,6 +7,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -30,25 +31,25 @@ public class UserDetails extends BaseEntity implements Serializable {
     @Column(name = "gender", nullable = false)
     private String gender;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "address", referencedColumnName = "id")
     private Address address;
 
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "user_authentication", referencedColumnName = "id")
     private UserAuthentication userAuthentication;
 
 
-    @OneToMany(mappedBy = "patient", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<MedicalRecord> medicalRecord;
 
     @OneToMany(mappedBy = "doctor")
     private List<MedicationPlan> doctorMedicalPlans;
 
-    @OneToMany(mappedBy = "patient")
+    @OneToMany(mappedBy = "patient", cascade = CascadeType.ALL)
     private List<MedicationPlan> patientMedicalPlans;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
             name = "patient_caregiver",
             joinColumns = @JoinColumn(name = "patient_id"),
@@ -56,7 +57,7 @@ public class UserDetails extends BaseEntity implements Serializable {
     )
     private List<UserDetails> caregivers;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
     @JoinTable(
                 name = "patient_caregiver",
                 joinColumns = @JoinColumn(name = "caregiver_id"),
@@ -192,5 +193,9 @@ public class UserDetails extends BaseEntity implements Serializable {
 
     public void setMedicalRecord(List<MedicalRecord> medicalRecord) {
         this.medicalRecord = medicalRecord;
+    }
+
+    public void addPatientToCaregiver(UserDetails patient){
+        this.patients.add(patient);
     }
 }

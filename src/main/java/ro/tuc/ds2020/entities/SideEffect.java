@@ -9,6 +9,7 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Entity
@@ -39,6 +40,12 @@ public class SideEffect extends BaseEntity implements Serializable {
         this.details = details;
     }
 
+    public SideEffect(String name, String details, List<Medication> medicationList) {
+        this.name = name;
+        this.details = details;
+        this.medicationList = medicationList;
+    }
+
     public String getName() {
         return name;
     }
@@ -62,4 +69,5 @@ public class SideEffect extends BaseEntity implements Serializable {
     public void setMedicationList(List<Medication> medicationList) {
         this.medicationList = medicationList;
     }
+
 }

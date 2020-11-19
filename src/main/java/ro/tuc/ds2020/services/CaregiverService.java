@@ -3,10 +3,10 @@ package ro.tuc.ds2020.services;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ro.tuc.ds2020.dtos.CaregiverDTO;
-import ro.tuc.ds2020.dtos.PatientDTO;
 import ro.tuc.ds2020.dtos.builders.IMapper;
 import ro.tuc.ds2020.entities.UserDetails;
 import ro.tuc.ds2020.repositories.UserDetailsRepository;
@@ -24,8 +24,21 @@ public class CaregiverService extends Service<CaregiverDTO, UserDetails> impleme
     private static final Logger LOGGER = LoggerFactory.getLogger(ICaregiverService.class);
 
     @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
     protected CaregiverService(UserDetailsRepository repository, IMapper<CaregiverDTO, UserDetails> mapper) {
         super(repository, mapper);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UUID save(CaregiverDTO dto) {
+        UserDetails entity = mapper.toEntity(dto);
+        entity.getUserAuthentication().setPassword(encoder.encode(dto.getUserAuthentication().getPassword()));
+        UserDetails e = repository.save(entity);
+        LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.getId());
+        return e.getId();
     }
 
     @Override
@@ -56,5 +69,23 @@ public class CaregiverService extends Service<CaregiverDTO, UserDetails> impleme
             LOGGER.error("{} could not find id {} in db", this.getClass().getSimpleName(), id);
         }
         return entity.map(mapper::toDTO);
+    }
+
+
+    @Transactional(rollbackFor = Exception.class)
+    public UUID updatePatients(CaregiverDTO dto) {
+
+        List<UUID> ids = dto.getPatients().stream().map( entity -> entity.getId()).collect(Collectors.toList());
+        Optional<UserDetails> entity = repository.findById(dto.getId());
+        entity.get().getPatients().clear();
+
+        ids.forEach(id ->{
+            Optional<UserDetails> patient = repository.findById(id);
+            entity.get().addPatientToCaregiver(patient.get());
+        });
+
+        UserDetails e = repository.save(entity.get());
+        LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.get().getId());
+        return e.getId();
     }
 }

@@ -73,4 +73,14 @@ public class PatientService extends Service<PatientDTO, UserDetails> implements 
                 .collect(Collectors.toList());
     }
 
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public UUID update(PatientDTO dto) {
+        UserDetails entity = mapper.toEntity(dto);
+        entity.setCaregivers(((UserDetailsRepository)repository).findById(dto.getId()).get().getCaregivers());
+        repository.save(entity);
+        LOGGER.debug("{} updated id {} in db", this.getClass().getSimpleName(), entity.getId());
+        return entity.getId();
+    }
+
 }

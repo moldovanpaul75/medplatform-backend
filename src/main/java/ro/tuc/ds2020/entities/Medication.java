@@ -4,6 +4,7 @@ package ro.tuc.ds2020.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "medication")
@@ -17,7 +18,7 @@ public class Medication extends BaseEntity implements Serializable {
     @Column(name = "type", nullable = false)
     private String type;
 
-    @ManyToMany(cascade = {CascadeType.REFRESH})
+    @ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinTable(
             name = "medication_side_effects",
             joinColumns = @JoinColumn(name = "medication_id"),
@@ -25,7 +26,7 @@ public class Medication extends BaseEntity implements Serializable {
     )
     private List<SideEffect> sideEffectList;
 
-    @OneToMany(mappedBy = "medication")
+    @OneToMany(mappedBy = "medication", cascade = {CascadeType.REFRESH})
     private List<MedicationPlan> medicationPlanList;
 
     public Medication(){

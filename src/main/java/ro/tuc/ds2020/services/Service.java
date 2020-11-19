@@ -95,7 +95,7 @@ public class Service<DTO extends BaseDTO, Entity extends BaseEntity> implements 
             throw new ResourceNotFoundException(this.getClass().getSimpleName() + "could not delete id: " + id);
         }
         LOGGER.debug("{} with id {} was deleted from db", entity.get().getClass().getSimpleName(), entity.get().getId());
-        repository.deleteById(id);
+        repository.delete(entity.get());
     }
 
     @Override

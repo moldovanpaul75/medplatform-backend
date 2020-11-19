@@ -42,7 +42,7 @@ public class MedicationPlan extends BaseEntity implements Serializable {
     @JoinColumn(name = "doctor", referencedColumnName = "id", nullable = false)
     private UserDetails doctor;
 
-    @ManyToOne
+    @ManyToOne(cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "medication", referencedColumnName = "id")
     private Medication medication;
 

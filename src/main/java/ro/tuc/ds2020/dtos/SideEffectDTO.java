@@ -1,6 +1,7 @@
 package ro.tuc.ds2020.dtos;
 
 
+import java.util.List;
 import java.util.UUID;
 
 public class SideEffectDTO extends BaseDTO {
@@ -19,6 +20,7 @@ public class SideEffectDTO extends BaseDTO {
         this.name = name;
         this.details = details;
     }
+
 
     public String getName() {
         return name;

@@ -36,11 +36,11 @@ variables:
     
 deploy:
   stage: deploy
-  image: ruby:2.3
+  image: ruby:2.4
   script:
     - apt-get update -qy
     - apt-get install -y ruby-dev
     - gem install dpl
-    - dpl --provider=heroku --app=spring-demo-ds2020 --api-key=$HEROKU_API_KEY
+    - dpl --provider=heroku --app=medplatform-backend --api-key=$HEROKU_API_KEY
   only:
     - production

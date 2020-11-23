@@ -6,6 +6,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
+///
 @Entity
 @Table(name = "medication")
 public class Medication extends BaseEntity implements Serializable {
@@ -26,7 +27,8 @@ public class Medication extends BaseEntity implements Serializable {
     )
     private List<SideEffect> sideEffectList;
 
-    @OneToMany(mappedBy = "medication", cascade = {CascadeType.REFRESH})
+    //
+    @OneToMany(mappedBy = "medication", cascade = {CascadeType.ALL})
     private List<MedicationPlan> medicationPlanList;
 
     public Medication(){
@@ -51,6 +53,14 @@ public class Medication extends BaseEntity implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<MedicationPlan> getMedicationPlanList() {
+        return medicationPlanList;
+    }
+
+    public void setMedicationPlanList(List<MedicationPlan> medicationPlanList) {
+        this.medicationPlanList = medicationPlanList;
     }
 
     public List<SideEffect> getSideEffectList() {

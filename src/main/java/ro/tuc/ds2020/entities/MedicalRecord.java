@@ -21,7 +21,7 @@ public class MedicalRecord extends BaseEntity implements Serializable {
     @Column(name = "details", nullable = false)
     private String details;
 
-    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.MERGE, CascadeType.DETACH})
+    @ManyToOne(fetch = FetchType.EAGER, cascade = {CascadeType.REFRESH})
     @JoinColumn(name = "patient", referencedColumnName = "id", nullable = false)
     private UserDetails patient;
 

@@ -8,8 +8,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ro.tuc.ds2020.dtos.PatientDTO;
 import ro.tuc.ds2020.dtos.builders.IMapper;
-import ro.tuc.ds2020.dtos.builders.PatientMapper;
+import ro.tuc.ds2020.entities.UserAuthentication;
 import ro.tuc.ds2020.entities.UserDetails;
+import ro.tuc.ds2020.repositories.UserAuthenticationRepository;
 import ro.tuc.ds2020.repositories.UserDetailsRepository;
 
 import java.util.List;
@@ -24,20 +25,36 @@ public class PatientService extends Service<PatientDTO, UserDetails> implements 
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IPatientService.class);
 
-    @Autowired
-    private PasswordEncoder encoder;
+
+    protected final PasswordEncoder encoder;
+
+    protected final UserAuthenticationRepository userAuthenticationRepository;
+
 
     @Autowired
-    protected PatientService(UserDetailsRepository repository, IMapper<PatientDTO, UserDetails> mapper) {
+    protected PatientService(UserDetailsRepository repository, IMapper<PatientDTO, UserDetails> mapper, PasswordEncoder encoder, UserAuthenticationRepository userAuthenticationRepository) {
         super(repository, mapper);
+        this.encoder = encoder;
+        this.userAuthenticationRepository = userAuthenticationRepository;
     }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UUID save(PatientDTO dto) {
+        Optional<UserAuthentication> userAuthentication = Optional.empty();
+
+        if(dto.getUserAuthentication().getId() != null){
+            userAuthentication = userAuthenticationRepository.findById(dto.getUserAuthentication().getId());
+        }
+
         UserDetails entity = mapper.toEntity(dto);
-        entity.getUserAuthentication().setPassword(encoder.encode(dto.getUserAuthentication().getPassword()));
+        if(userAuthentication.isPresent()){
+            entity.setUserAuthentication(userAuthentication.get());
+        } else {
+            entity.getUserAuthentication().setPassword(encoder.encode(dto.getUserAuthentication().getPassword()));
+        }
+
         UserDetails e = repository.save(entity);
         LOGGER.debug("{} with id {} was inserted in db", entity.getClass().getSimpleName(), entity.getId());
         return e.getId();

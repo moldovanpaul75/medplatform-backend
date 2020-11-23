@@ -2,6 +2,7 @@ package ro.tuc.ds2020.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ro.tuc.ds2020.dtos.UserRoleDTO;
 import ro.tuc.ds2020.dtos.builders.IMapper;
@@ -15,6 +16,7 @@ public class UserRoleService extends Service<UserRoleDTO, UserRole> implements I
 
     private static final Logger LOGGER = LoggerFactory.getLogger(IUserRoleService.class);
 
+    @Autowired
     protected UserRoleService(UserRoleRepository repository, IMapper<UserRoleDTO, UserRole> mapper) {
         super(repository, mapper);
     }

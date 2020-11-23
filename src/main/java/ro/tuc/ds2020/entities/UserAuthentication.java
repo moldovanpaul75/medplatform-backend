@@ -7,27 +7,27 @@ import org.hibernate.annotations.Type;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.UUID;
-
+///
 @Entity
 @Table(name = "user_authentication")
 public class UserAuthentication extends BaseEntity implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
-    @Column(name = "username", nullable = false)
+    @Column(name = "username", unique = true, nullable = false)
     private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "email", nullable = false)
+    @Column(name = "email", unique = true, nullable = false)
     private String email;
 
     @ManyToOne
     @JoinColumn(name = "role", referencedColumnName = "id", nullable = false)
     private UserRole userRole;
 
-    @OneToOne(mappedBy = "userAuthentication", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.DETACH})
+    @OneToOne(mappedBy = "userAuthentication", cascade = CascadeType.ALL)
     private UserDetails userDetails;
 
     public UserAuthentication(){

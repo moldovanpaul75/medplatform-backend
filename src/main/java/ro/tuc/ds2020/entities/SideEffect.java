@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
 
+///
 @Entity
 @Table(name = "side_effect")
 public class SideEffect extends BaseEntity implements Serializable {

@@ -4,7 +4,7 @@ package ro.tuc.ds2020.entities;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
+///
 @Entity
 @Table(name = "address")
 public class Address extends BaseEntity implements Serializable {

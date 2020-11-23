@@ -2,6 +2,7 @@ package ro.tuc.ds2020.services;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import ro.tuc.ds2020.dtos.SideEffectDTO;
@@ -17,7 +18,7 @@ public class SideEffectService extends Service<SideEffectDTO, SideEffect> implem
 
     private static final Logger LOGGER = LoggerFactory.getLogger(ISideEffectService.class);
 
-
+    @Autowired
     protected SideEffectService(SideEffectRepository repository, IMapper<SideEffectDTO, SideEffect> mapper) {
         super(repository, mapper);
     }

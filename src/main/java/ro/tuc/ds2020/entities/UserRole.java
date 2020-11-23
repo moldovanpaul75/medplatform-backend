@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-
+///
 @Entity
 @Table(name = "user_role")
 public class UserRole extends BaseEntity implements Serializable {
@@ -16,7 +16,7 @@ public class UserRole extends BaseEntity implements Serializable {
     @Column(name = "name", nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "userRole")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userRole")
     private List<UserAuthentication> users;
 
     public UserRole(){

@@ -22,7 +22,6 @@ public class UserAuthenticationController extends Controller<UserAuthenticationD
         super(facade);
     }
 
-
     @Override
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<UUID> create(@RequestBody UserAuthenticationDTO dto) {

@@ -35,7 +35,7 @@ build:
     - docker push $CI_REGISTRY_IMAGE:latest
 
 variables:
-  APP_NAME: spring-demo-ds2020
+  APP_NAME: medplatform-backend
 
 deploy:
   image: docker:latest

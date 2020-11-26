@@ -6,8 +6,8 @@
 
     <groupId>ro.tuc</groupId>
     <artifactId>ds-2020</artifactId>
-    <version>1.0</version>
-    <name>ds-2020-med-platform</name>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>ds-2020</name>
     <description>Online Medication Platform</description>
     <packaging>jar</packaging>
 

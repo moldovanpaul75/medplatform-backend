@@ -8,7 +8,7 @@ public class ActivityDTO extends BaseDTO{
     private long end;
     private String activity;
     private UUID patient_id;
-    private boolean flag;
+    private boolean flag = false;
 
     public ActivityDTO(){ super(); }
 

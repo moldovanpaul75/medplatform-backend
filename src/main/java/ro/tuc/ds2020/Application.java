@@ -5,6 +5,7 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -18,10 +19,15 @@ import java.util.TimeZone;
 @Validated
 public class Application extends SpringBootServletInitializer {
 
+    @Value("${rabbitmq.topicExchange}")
+    private String topicExchangeName;
 
-    static final String topicExchangeName = "spring-boot-exchange";
+    @Value("${rabbitmq.queueName}")
+    private String queueName;
 
-    static final String queueName = "spring-boot";
+    @Value("${rabbitmq.routingKey}")
+    private String routingKey;
+
 
     @Bean
     Queue queue() {
@@ -35,7 +41,7 @@ public class Application extends SpringBootServletInitializer {
 
     @Bean
     Binding binding(Queue queue, TopicExchange exchange) {
-        return BindingBuilder.bind(queue).to(exchange).with("myNameIsJeff");
+        return BindingBuilder.bind(queue).to(exchange).with(routingKey);
     }
 
 

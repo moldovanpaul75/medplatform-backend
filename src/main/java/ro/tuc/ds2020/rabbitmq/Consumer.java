@@ -1,14 +1,16 @@
-package ro.tuc.ds2020.services;
+package ro.tuc.ds2020.rabbitmq;
 
 import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 import ro.tuc.ds2020.dtos.ActivityDTO;
 import ro.tuc.ds2020.dtos.builders.IMapper;
 import ro.tuc.ds2020.entities.Activity;
+import ro.tuc.ds2020.services.ActivityService;
 
 @Component
 public class Consumer {
@@ -17,11 +19,13 @@ public class Consumer {
 
     protected final ActivityService activityService;
     protected final IMapper<ActivityDTO, Activity> mapper;
+    protected final SimpMessagingTemplate simpMessagingTemplate;
 
     @Autowired
-    public Consumer(ActivityService activityService, IMapper<ActivityDTO, Activity> mapper) {
+    public Consumer(ActivityService activityService, IMapper<ActivityDTO, Activity> mapper, SimpMessagingTemplate simpMessagingTemplate) {
         this.activityService = activityService;
         this.mapper = mapper;
+        this.simpMessagingTemplate = simpMessagingTemplate;
     }
 
 
@@ -37,14 +41,19 @@ public class Consumer {
     }
 
 
-    @RabbitListener(queues = "spring-boot")
+    @RabbitListener(queues = "${rabbitmq.queueName}")
     public void messageReceiver(String message) {
         Gson gson = new Gson();
         ActivityDTO activityDTO = gson.fromJson(message, ActivityDTO.class);
-        activityDTO.setFlag(this.checkRules(activityDTO));
+
+        if(this.checkRules(activityDTO)){
+            activityDTO.setFlag(true);
+            this.simpMessagingTemplate.convertAndSend("/topic/update", activityDTO);
+        }
+
         System.out.println(activityDTO);
 
-        activityService.save(activityDTO);
+        this.activityService.save(activityDTO);
     }
 
 }

@@ -18,6 +18,13 @@ public class DoctorDTO extends BaseDTO {
         super();
     }
 
+    public DoctorDTO(String firstName, String lastName, Date dateOfBirth, String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
+    }
+
     public DoctorDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender) {
         super(id);
         this.firstName = firstName;
@@ -83,5 +90,17 @@ public class DoctorDTO extends BaseDTO {
 
     public void setUserAuthentication(UserAuthenticationDTO userAuthentication) {
         this.userAuthentication = userAuthentication;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorDTO{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                ", address=" + address +
+                ", userAuthentication=" + userAuthentication +
+                '}';
     }
 }

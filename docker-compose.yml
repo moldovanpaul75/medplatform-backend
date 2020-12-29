@@ -5,4 +5,4 @@ services:
   tomcat-db-api:
     image: your_image_name
     ports:
-       - "8080:8080"
+      - "8080:8080"

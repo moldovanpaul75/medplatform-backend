@@ -14,6 +14,13 @@ public class AddressDTO extends BaseDTO{
         super();
     }
 
+    public AddressDTO(String street, String city, String state, String zipCode) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
+    }
+
     public AddressDTO(UUID id, String street, String city, String state, String zipCode) {
         super(id);
         this.street = street;
@@ -52,5 +59,15 @@ public class AddressDTO extends BaseDTO{
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressDTO{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
 }

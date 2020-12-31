@@ -19,7 +19,7 @@ public class ConfigRMI {
         exporter.setServiceName("medplanrmi");
         exporter.setServiceInterface(IMedPlanRMI.class);
         exporter.setService(new MedPlanRMI(medicationPlanService));
-        //exporter.setRegistryPort(1099);
+        exporter.setRegistryPort(1099);
 
         return exporter;
     }

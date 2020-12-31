@@ -1,10 +1,10 @@
 package ro.tuc.ds2020.jsonrpc;
 
+import com.google.gson.Gson;
 import com.googlecode.jsonrpc4j.spring.AutoJsonRpcServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ro.tuc.ds2020.dtos.MedicationPlanDTO;
-import ro.tuc.ds2020.entities.MedicationPlan;
 import ro.tuc.ds2020.services.MedicationPlanService;
 
 import java.util.Date;
@@ -26,10 +26,11 @@ public class MedPlanRPC implements IMedPlanRPC{
     }
 
 
-    public List<MedicationPlanDTO> findMedicationPlanById(UUID patientID) {
+    public String findMedicationPlanById(UUID patientID) {
+        Gson gson = new Gson();
         List<MedicationPlanDTO> medPlans = medicationPlanService.findAllByPatientId(patientID);
-
-        return medPlans;
+        System.out.println(gson.toJson(medPlans));
+        return gson.toJson(medPlans);
     }
 
 

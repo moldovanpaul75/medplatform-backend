@@ -9,4 +9,5 @@ public interface IMedicationPlanService extends IService<MedicationPlanDTO> {
 
     public abstract List<MedicationPlanDTO> findAllByAuthId(UUID id);
 
+    public abstract List<MedicationPlanDTO> findAllByPatientId(UUID id);
 }

@@ -16,5 +16,4 @@ public class Ds2020TestConfig {
     public void contextLoads() {
         assert true ;
     }
-
 }

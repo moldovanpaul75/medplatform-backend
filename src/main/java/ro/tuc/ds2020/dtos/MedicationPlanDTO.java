@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public class MedicationPlanDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
     private String dosage;
     private Date start;
     private Date end;

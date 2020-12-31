@@ -4,6 +4,8 @@ import java.util.UUID;
 
 public class ActivityDTO extends BaseDTO{
 
+    private static final long serialVersionUID = 1L;
+
     private long start;
     private long end;
     private String activity;

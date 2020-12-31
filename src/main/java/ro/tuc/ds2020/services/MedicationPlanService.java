@@ -31,4 +31,12 @@ public class MedicationPlanService extends Service<MedicationPlanDTO, Medication
                 .map(mapper::toDTO)
                 .collect(Collectors.toList());
     }
+
+    @Override
+    public List<MedicationPlanDTO> findAllByPatientId(UUID id) {
+        LOGGER.debug("{} searched for entities in table", this.getClass().getSimpleName());
+        return StreamSupport.stream(((MedicationPlanRepository) repository).findAllPlansByPatientId(id).spliterator(), false)
+                .map(mapper::toDTO)
+                .collect(Collectors.toList());
+    }
 }

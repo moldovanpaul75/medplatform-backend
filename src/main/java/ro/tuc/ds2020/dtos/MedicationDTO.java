@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public class MedicationDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
     private String name;
     private String type;
     private List<SideEffectDTO> sideEffectList;

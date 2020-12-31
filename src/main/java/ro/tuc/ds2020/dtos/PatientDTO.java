@@ -7,6 +7,8 @@ import java.util.UUID;
 
 public class PatientDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
     private String firstName;
     private String lastName;
     private Date dateOfBirth;

@@ -13,6 +13,10 @@ public class UserRoleDTO extends BaseDTO {
         super();
     }
 
+    public UserRoleDTO(String name) {
+        this.name = name;
+    }
+
     public UserRoleDTO(UUID id, String name) {
         super(id);
         this.name = name;
@@ -24,5 +28,12 @@ public class UserRoleDTO extends BaseDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return "UserRoleDTO{" +
+                "name='" + name + '\'' +
+                '}';
     }
 }

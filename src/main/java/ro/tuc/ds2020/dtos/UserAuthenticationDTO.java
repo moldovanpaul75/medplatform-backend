@@ -31,6 +31,13 @@ public class UserAuthenticationDTO extends BaseDTO implements UserDetails {
         this.userRole = userRole;
     }
 
+    public UserAuthenticationDTO(String username, String password, String email, UserRoleDTO userRole) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userRole = userRole;
+    }
+
     public UserAuthenticationDTO(UUID id, String username, String password, String email, UserRoleDTO userRole) {
         super(id);
         this.username = username;
@@ -102,5 +109,15 @@ public class UserAuthenticationDTO extends BaseDTO implements UserDetails {
         authorities.add(new SimpleGrantedAuthority(this.userRole.getName()));
 
         return authorities;
+    }
+
+    @Override
+    public String toString() {
+        return "UserAuthenticationDTO{" +
+                "username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", userRole=" + userRole +
+                '}';
     }
 }

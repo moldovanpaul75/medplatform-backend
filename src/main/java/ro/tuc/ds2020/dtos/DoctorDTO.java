@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public class DoctorDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
     private String firstName;
     private String lastName;
     private Date dateOfBirth;
@@ -16,6 +18,13 @@ public class DoctorDTO extends BaseDTO {
 
     public DoctorDTO() {
         super();
+    }
+
+    public DoctorDTO(String firstName, String lastName, Date dateOfBirth, String gender) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
+        this.gender = gender;
     }
 
     public DoctorDTO(UUID id, String firstName, String lastName, Date dateOfBirth, String gender) {
@@ -83,5 +92,17 @@ public class DoctorDTO extends BaseDTO {
 
     public void setUserAuthentication(UserAuthenticationDTO userAuthentication) {
         this.userAuthentication = userAuthentication;
+    }
+
+    @Override
+    public String toString() {
+        return "DoctorDTO{" +
+                "firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", dateOfBirth=" + dateOfBirth +
+                ", gender='" + gender + '\'' +
+                ", address=" + address +
+                ", userAuthentication=" + userAuthentication +
+                '}';
     }
 }

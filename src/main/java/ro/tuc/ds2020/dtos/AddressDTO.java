@@ -5,6 +5,8 @@ import java.util.UUID;
 
 public class AddressDTO extends BaseDTO{
 
+    private static final long serialVersionUID = 1L;
+
     private String street;
     private String city;
     private String state;
@@ -12,6 +14,13 @@ public class AddressDTO extends BaseDTO{
 
     public AddressDTO(){
         super();
+    }
+
+    public AddressDTO(String street, String city, String state, String zipCode) {
+        this.street = street;
+        this.city = city;
+        this.state = state;
+        this.zipCode = zipCode;
     }
 
     public AddressDTO(UUID id, String street, String city, String state, String zipCode) {
@@ -52,5 +61,15 @@ public class AddressDTO extends BaseDTO{
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "AddressDTO{" +
+                "street='" + street + '\'' +
+                ", city='" + city + '\'' +
+                ", state='" + state + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
 }

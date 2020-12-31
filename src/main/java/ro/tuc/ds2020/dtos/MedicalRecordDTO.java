@@ -6,6 +6,8 @@ import java.util.UUID;
 
 public class MedicalRecordDTO extends BaseDTO {
 
+    private static final long serialVersionUID = 1L;
+
     private Date releaseDate;
     private String details;
 

@@ -15,4 +15,7 @@ public interface MedicationPlanRepository extends IBaseRepository<MedicationPlan
     @Query("SELECT p FROM MedicationPlan p WHERE p.patient.userAuthentication.id =:id")
     List<MedicationPlan> findAllPlansByAuthId(@Param("id") UUID id);
 
+
+    @Query("SELECT p FROM MedicationPlan p WHERE p.patient.id =:id")
+    List<MedicationPlan> findAllPlansByPatientId(@Param("id") UUID id);
 }

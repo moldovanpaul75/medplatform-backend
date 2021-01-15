@@ -78,20 +78,40 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/").permitAll()
-//                .antMatchers("/auth").permitAll()
-//                .antMatchers("/user_authentication").access("hasAuthority('ROLE_doctor')")
-//                .antMatchers("/user_role").access("hasAuthority('ROLE_doctor')")
-//
-//                .antMatchers("/address").access("hasAuthority('ROLE_doctor') " +
-//                                                                "or hasAuthority('ROLE_caregiver')" +
-//                                                                "or hasAuthority('ROLE_patient')")
-//
-//                .antMatchers("/doctor").access("hasAuthority('ROLE_doctor')")
-//                .antMatchers("/patient").access("hasAuthority('ROLE_patient')")
-//                .antMatchers("/caregiver").access("hasAuthority('ROLE_caregiver')")
-//
+
+                .antMatchers("/auth").permitAll()
+
+                .antMatchers("/user_authentication").access("hasAuthority('ROLE_doctor')")
+
+                .antMatchers("/caregiver").access("hasAuthority('ROLE_doctor') " +
+                                                                    "or hasAuthority('ROLE_caregiver')")
+
+                .antMatchers("/doctor").access("hasAuthority('ROLE_doctor')")
+
+                .antMatchers("/medical_record").access("hasAuthority('ROLE_doctor')"+
+                                                                    "or hasAuthority('ROLE_patient')")
+
+                .antMatchers("/medication").access("hasAuthority('ROLE_doctor')")
+
+                .antMatchers("/medication_plan").access("hasAuthority('ROLE_doctor')"+
+                                                                     "or hasAuthority('ROLE_patient')")
+
+                .antMatchers("/patient").access("hasAuthority('ROLE_doctor') "+
+                                                                    "or hasAuthority('ROLE_patient')")
+
+                .antMatchers("/side_effect").access("hasAuthority('ROLE_doctor')")
+
+                .antMatchers("/user_role").access("hasAuthority('ROLE_doctor')")
+
+                .antMatchers("/address").access("hasAuthority('ROLE_doctor') " +
+                                                                    "or hasAuthority('ROLE_caregiver')" +
+                                                                    "or hasAuthority('ROLE_patient')")
+
+                .antMatchers("/medplanrpc").permitAll()
+
+                .antMatchers("/socket").permitAll()
 //                .antMatchers("/**").denyAll()   //block all other requests
-                .antMatchers("/**").permitAll()
+//                .antMatchers("/**").permitAll()
                 .anyRequest().authenticated()
         ;
 
